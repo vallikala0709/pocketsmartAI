@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Party Planner - PocketSmart AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Party Planner</h1>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/dashboard">Dashboard</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <h2>Plan Your Event Budget</h2>
+        <form id="partyForm">
+            <label for="event_type">Event Type:</label>
+            <input type="text" id="event_type" name="event_type" placeholder="e.g., Birthday, Anniversary" required>
+
+            <label for="guests">Number of Guests:</label>
+            <input type="number" id="guests" name="guests" placeholder="e.g., 50" required>
+
+            <label for="budget">Total Budget ($ / ₹):</label>
+            <input type="number" id="budget" name="budget" placeholder="e.g., 25000" required>
+
+            <button type="submit" class="btn">Generate Party Plan</button>
+        </form>
+
+        <div id="result" class="result-box" style="display:none;">
+            <h3>Budget Breakdown (Catering, Decoration, Venue):</h3>
+            <p id="outputContent"></p>
+        </div>
+    </main>
+
+    <script>
+        document.getElementById('partyForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const event_type = document.getElementById('event_type').value;
+            const guests = document.getElementById('guests').value;
+            const budget = document.getElementById('budget').value;
+
+            const response = await fetch('/generate-party', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ event_type, guests, budget })
+            });
+
+            const data = await response.json();
+            document.getElementById('outputContent').innerText = data.result;
+            document.getElementById('result').style.display = 'block';
+        });
+    </script>
+</body>
+</html>
