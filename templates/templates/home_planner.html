@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Interior Planner - PocketSmart AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Home Interior Planner</h1>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/dashboard">Dashboard</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <h2>Plan Your Home Interior Budget</h2>
+        <form id="homeForm">
+            <label for="rooms">Room Types & Quantities (e.g., 2 Bedrooms, 1 Living Room):</label>
+            <input type="text" id="rooms" name="rooms" placeholder="e.g., Living Room, Master Bedroom" required>
+
+            <label for="budget">Total Budget ($ / ₹):</label>
+            <input type="number" id="budget" name="budget" placeholder="e.g., 50000" required>
+
+            <button type="submit" class="btn">Generate Plan</button>
+        </form>
+
+        <div id="result" class="result-box" style="display:none;">
+            <h3>AI Recommendations:</h3>
+            <p id="outputContent"></p>
+        </div>
+    </main>
+
+    <script>
+        document.getElementById('homeForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const rooms = document.getElementById('rooms').value;
+            const budget = document.getElementById('budget').value;
+
+            const response = await fetch('/generate-home', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ rooms, budget })
+            });
+
+            const data = await response.json();
+            document.getElementById('outputContent').innerText = data.result;
+            document.getElementById('result').style.display = 'block';
+        });
+    </script>
+</body>
+</html>
