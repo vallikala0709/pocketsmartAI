@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jewelry Planner - PocketSmart AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Jewelry Planner</h1>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/dashboard">Dashboard</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <h2>Find Matching Jewelry Within Your Budget</h2>
+        <form id="jewelryForm">
+            <label for="occasion">Occasion Type:</label>
+            <input type="text" id="occasion" name="occasion" placeholder="e.g., Wedding, Party, Casual" required>
+
+            <label for="budget">Total Budget ($ / ₹):</label>
+            <input type="number" id="budget" name="budget" placeholder="e.g., 15000" required>
+
+            <button type="submit" class="btn">Get Recommendations</button>
+        </form>
+
+        <div id="result" class="result-box" style="display:none;">
+            <h3>Recommended Jewelry Pieces:</h3>
+            <p id="outputContent"></p>
+        </div>
+    </main>
+
+    <script>
+        document.getElementById('jewelryForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const occasion = document.getElementById('occasion').value;
+            const budget = document.getElementById('budget').value;
+
+            const response = await fetch('/generate-jewelry', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ occasion, budget })
+            });
+
+            const data = await response.json();
+            document.getElementById('outputContent').innerText = data.result;
+            document.getElementById('result').style.display = 'block';
+        });
+    </script>
+</body>
+</html>
