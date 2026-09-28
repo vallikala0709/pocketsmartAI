@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PocketSmart AI - Your Smart Budget Planner</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header>
+        <h1>PocketSmart AI</h1>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/dashboard">Dashboard</a>
+            <a href="/login">Login</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <h2>Smart Budgeting Made Easy</h2>
+        <p>Select a planner to get started with your customized budget recommendations:</p>
+        
+        <div class="card-grid">
+            <div class="card">
+                <h3>Home Interior Planner</h3>
+                <p>Plan budget and item allocations for your rooms.</p>
+                <a href="/home_planner" class="btn">Start Home Planning</a>
+            </div>
+
+            <div class="card">
+                <h3>Party Planner</h3>
+                <p>Split budget across catering, decorations, and entertainment.</p>
+                <a href="/party_planner" class="btn">Start Party Planning</a>
+            </div>
+
+            <div class="card">
+                <h3>Jewelry Planner</h3>
+                <p>Match jewelry with your outfit and occasion within budget.</p>
+                <a href="/jewelry_planner" class="btn">Start Jewelry Planning</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 PocketSmart AI. All rights reserved.</p>
+    </footer>
+</body>
+</html>
